@@ -5,12 +5,14 @@ const getUser= async()=>{
 }
 const displayUser =async()=>{
     const response=await getUser();
+    console.log(response);
     const display=response.data.users.map(data=>{
         return`
             <tr>
       <td>${data.id}</td>
       <td>${data.name}</td>
       <td>${data.email}</td>
+      <td>    <a href="./detail.html?id=${data.id}" class="btn btn-primary">Detail</a></td>
     </tr>
         `
 
