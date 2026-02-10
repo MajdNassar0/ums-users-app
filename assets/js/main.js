@@ -12,7 +12,10 @@ const displayUser =async()=>{
       <td>${data.id}</td>
       <td>${data.name}</td>
       <td>${data.email}</td>
-      <td>    <a href="./detail.html?id=${data.id}" class="btn btn-primary">Detail</a></td>
+      <td>    <a href="./detail.html?id=${data.id}" class="btn btn-primary">Detail</a>
+      <button type="button" class="btn btn-danger" onclick= "deleteUser(${data.id})" >Delete</button>
+      </td>
+
     </tr>
         `
 
@@ -21,3 +24,31 @@ const displayUser =async()=>{
 
 }
 displayUser();
+
+const deleteUser=(id)=>{
+    Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then(async(result) => {
+  if (result.isConfirmed) {
+        const response = await  axios.delete(`http://ums12.runasp.net/api/users/${id}`);
+        if(response.status==200){
+              Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    displayUser();
+
+
+        }
+
+  
+  }
+});
+}
